@@ -15,15 +15,19 @@ rejson(redis);
 
 let
   client    = redis.createClient({
-    port      : 12282,               // replace with your port
-    host      : process.env.HOST,        // replace with your hostanme or IP address
-    password  : process.env.PASSWORD,    // replace with your password
+    port      : 6379,               // replace with your port
+    host      : '192.168.1.158',    // replace with your hostanme or IP address
   });
 
 require('./updatepos.js')(app,client);
 require('./updatelaptime.js')(app,client);
 require('./getleaderboard.js')(app, client);
 require('./login.js')(app,client);
+
+client.json_set("players", ".", "{}", function(err, res) {
+  if (err) throw err;
+  console.log("Initialized players key");
+});
 
 client.keys('*', function(err, keys) {
   if (!keys.includes("players")){
@@ -59,4 +63,4 @@ setInterval(function(){
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Example app listening at http://localhost:${port}`)
-})
+}) 

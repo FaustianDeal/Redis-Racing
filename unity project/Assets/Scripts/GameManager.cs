@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
                 popupBox.SetText(loginResponse.message);
             }
         }
+        uwr.Dispose();
     }
     public void SpawnPlayer(string name) {
         // Loop through all players to check if the current user already has a car
@@ -148,6 +149,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+            uwr.Dispose();
             DateTime time2 = DateTime.Now;
             float timePassed = (float)time2.Subtract(time).TotalSeconds;
             if (timePassed < .1f) {
@@ -167,6 +169,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(uwr.downloadHandler.text);
             JsonToLeaderboard(uwr.downloadHandler.text);
         }
+        uwr.Dispose();
     }
     public void JsonToLeaderboard(string json) {
         var leaderboard = JsonConvert.DeserializeObject<List<LeaderboardData>>(json);
